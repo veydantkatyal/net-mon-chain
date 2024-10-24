@@ -38,4 +38,4 @@ NetMonChain is a decentralized system for monitoring network traffic across dist
     ```
 
 ## License
-This is project is licensed under MIT License[], please go through it carefully.
+This is project is licensed under [MIT License](https://github.com/veydantkatyal/net-mon-chain/blob/main/LICENSE), please go through it carefully, before using it.
