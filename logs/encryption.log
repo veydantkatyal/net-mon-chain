@@ -1,0 +1,40 @@
+from cryptography.fernet import Fernet
+import logging
+
+# Set up logger for encryption
+encryption_logger = logging.getLogger('encryption_logger')
+encryption_logger.setLevel(logging.DEBUG)
+
+# Create file handler which logs even debug messages
+file_handler = logging.FileHandler('logs/encryption.log')
+file_handler.setLevel(logging.DEBUG)
+
+# Create formatter and add it to the handler
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+
+# Add the handler to the logger
+encryption_logger.addHandler(file_handler)
+
+def load_key():
+    return open("key.key", "rb").read()
+
+def encrypt_data(data):
+    key = load_key()
+    fernet = Fernet(key)
+    encrypted_data = fernet.encrypt(data.encode())
+    encryption_logger.info(f"Data encrypted: {data}")
+    return encrypted_data
+
+def decrypt_data(encrypted_data):
+    key = load_key()
+    fernet = Fernet(key)
+    decrypted_data = fernet.decrypt(encrypted_data).decode()
+    encryption_logger.info(f"Data decrypted: {decrypted_data}")
+    return decrypted_data
+
+if __name__ == "__main__":
+    # Example usage
+    original_data = "This is a test log entry."
+    encrypted = encrypt_data(original_data)
+    decrypted = decrypt_data(encrypted)

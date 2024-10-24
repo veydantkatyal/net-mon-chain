@@ -1,0 +1,5 @@
+dpkt
+cryptography
+streamlit
+kafka-python
+cassandra-driver

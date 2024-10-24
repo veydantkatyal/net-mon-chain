@@ -1,0 +1,40 @@
+import dpkt
+import socket
+import logging
+
+# Set up logger for net monitor
+net_monitor_logger = logging.getLogger('net_monitor_logger')
+net_monitor_logger.setLevel(logging.DEBUG)
+
+# Create file handler which logs even debug messages
+file_handler = logging.FileHandler('logs/net_monitor.log')
+file_handler.setLevel(logging.DEBUG)
+
+# Create formatter and add it to the handler
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+
+# Add the handler to the logger
+net_monitor_logger.addHandler(file_handler)
+
+def process_packet(packet):
+    """
+    Processes a network packet and returns log data.
+    """
+    eth = dpkt.ethernet.Ethernet(packet)
+    if isinstance(eth.data, dpkt.ip.IP):
+        ip = eth.data
+        ip_src = socket.inet_ntoa(ip.src)
+        ip_dst = socket.inet_ntoa(ip.dst)
+        protocol = "TCP" if isinstance(ip.data, dpkt.tcp.TCP) else "UDP" if isinstance(ip.data, dpkt.udp.UDP) else "Other"
+        log_message = f"{ip_src} -> {ip_dst}, Protocol: {protocol}, Size: {len(packet)} bytes"
+        
+        # Log packet information
+        net_monitor_logger.info(f"Processed packet: {log_message}")
+        return log_message
+    return None
+
+if __name__ == "__main__":
+    # Example usage (replace with actual pcap file processing)
+    packet = b'\x00\x50\x56\xc0\x00\x01\x00\x0c\x29\x3b\xe0\xdd\x08\x00\x45\x00\x00\x3c\x1c\x46\x00\x00\x80\x06\xf6\x3d\xc0\xa8\x00\x68\xc0\xa8\x00\x01'
+    process_packet(packet)
