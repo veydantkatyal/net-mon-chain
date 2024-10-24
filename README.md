@@ -13,8 +13,8 @@ NetMonChain is a decentralized system for monitoring network traffic across dist
 ## Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/NetMonChain.git
-    cd NetMonChain
+    git clone https://github.com/veydantkatyal/net-mon-chain.git
+    cd net-mon-chain
     ```
 
 2. Install dependencies:
@@ -38,4 +38,4 @@ NetMonChain is a decentralized system for monitoring network traffic across dist
     ```
 
 ## License
-MIT License
+This is project is licensed under MIT License[], please go through it carefully.
